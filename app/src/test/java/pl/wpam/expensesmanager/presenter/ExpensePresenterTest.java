@@ -22,52 +22,52 @@ import static org.mockito.Mockito.when;
 
 public class ExpensePresenterTest {
 
-  private DatabaseHelper database;
-  private ExpenseView view;
-  private ExpensePresenter presenter;
+    private DatabaseHelper database;
+    private ExpenseView view;
+    private ExpensePresenter presenter;
 
-  @Before
-  public void setUp() throws Exception {
-    database = mock(DatabaseHelper.class);
-    view = mock(ExpenseView.class);
-    presenter = new ExpensePresenter(database, view);
-  }
+    @Before
+    public void setUp() throws Exception {
+        database = mock(DatabaseHelper.class);
+        view = mock(ExpenseView.class);
+        presenter = new ExpensePresenter(database, view);
+    }
 
-  @Test
-  public void shouldAddExpenseAndNotify() throws Exception {
-    DateTimeUtils.setCurrentMillisFixed(new DateTime("2015-09-06").getMillis());
-    when(view.getAmount()).thenReturn("123");
-    when(view.getType()).thenReturn("Food");
+    @Test
+    public void shouldAddExpenseAndNotify() throws Exception {
+        DateTimeUtils.setCurrentMillisFixed(new DateTime("2015-09-06").getMillis());
+        when(view.getAmount()).thenReturn("123");
+        when(view.getType()).thenReturn("Food");
 
-    ArgumentCaptor<Expense> expenseCaptor = ArgumentCaptor.forClass(Expense.class);
+        ArgumentCaptor<Expense> expenseCaptor = ArgumentCaptor.forClass(Expense.class);
 
-    assertTrue(presenter.addExpense());
-    verify(database).addExpense(expenseCaptor.capture());
+        assertTrue(presenter.addExpense());
+        verify(database).addExpense(expenseCaptor.capture());
 
-    Expense actualExpense = expenseCaptor.getValue();
-    assertThat(actualExpense.getAmount(), is(123l));
-    assertThat(actualExpense.getType(), is("Food"));
-    assertThat(actualExpense.getDate(), is("06-09-2015"));
-    DateTimeUtils.setCurrentMillisSystem();
-  }
+        Expense actualExpense = expenseCaptor.getValue();
+        assertThat(actualExpense.getAmount(), is(123.0));
+        assertThat(actualExpense.getType(), is("Food"));
+        assertThat(actualExpense.getDate(), is("06-09-2015"));
+        DateTimeUtils.setCurrentMillisSystem();
+    }
 
-  @Test
-  public void shouldNotAddExpenseAndNotifyViewWhenAmountIsEmpty() throws Exception {
-    when(view.getAmount()).thenReturn("");
-    when(view.getType()).thenReturn("Food");
+    @Test
+    public void shouldNotAddExpenseAndNotifyViewWhenAmountIsEmpty() throws Exception {
+        when(view.getAmount()).thenReturn("");
+        when(view.getType()).thenReturn("Food");
 
-    assertFalse(presenter.addExpense());
-    verify(view).showError();
-    verifyNoMoreInteractions(database);
-  }
+        assertFalse(presenter.addExpense());
+        verify(view).showError();
+        verifyNoMoreInteractions(database);
+    }
 
-  @Test
-  public void shouldRenderExpenseTypes() throws Exception {
-    List<String> expenseTypes = asList("Food", "Travel");
-    when(database.getExpenseTypes()).thenReturn(expenseTypes);
+    @Test
+    public void shouldRenderExpenseTypes() throws Exception {
+        List<String> expenseTypes = asList("Food", "Travel");
+        when(database.getExpenseTypes()).thenReturn(expenseTypes);
 
-    presenter.setExpenseTypes();
+        presenter.setExpenseTypes();
 
-    verify(view).renderExpenseTypes(expenseTypes);
-  }
+        verify(view).renderExpenseTypes(expenseTypes);
+    }
 }

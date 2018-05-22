@@ -16,33 +16,33 @@ import static org.mockito.Mockito.when;
 
 public class TodayExpensesPresenterTest {
 
-  private DatabaseHelper database;
-  private TodayExpensesView view;
-  private TodayExpensesPresenter presenter;
-  private List<Expense> expenses;
+    private DatabaseHelper database;
+    private TodayExpensesView view;
+    private TodayExpensesPresenter presenter;
+    private List<Expense> expenses;
 
-  @Before
-  public void setUp() throws Exception {
-    database = mock(DatabaseHelper.class);
-    view = mock(TodayExpensesView.class);
+    @Before
+    public void setUp() throws Exception {
+        database = mock(DatabaseHelper.class);
+        view = mock(TodayExpensesView.class);
 
-    Expense expense1 = new Expense(90l, "Food", "03-09-2015", currency, exchangeRate);
-    Expense expense2 = new Expense(100l, "Travel", "31-08-2015", currency, exchangeRate);
-    expenses = asList(expense1, expense2);
-    when(database.getTodaysExpenses()).thenReturn(expenses);
+        Expense expense1 = new Expense(90.0, "Food", "03-09-2015", "PLN", 1.0);
+        Expense expense2 = new Expense(100.0, "Travel", "31-08-2015", "PLN", 1.0);
+        expenses = asList(expense1, expense2);
+        when(database.getTodaysExpenses()).thenReturn(expenses);
 
-    presenter = new TodayExpensesPresenter(view, database);
-  }
+        presenter = new TodayExpensesPresenter(view, database);
+    }
 
-  @Test
-  public void shouldRenderTodaysExpenses() throws Exception {
-    presenter.renderTodaysExpenses();
-    verify(view).showTodaysExpenses(expenses);
-  }
+    @Test
+    public void shouldRenderTodaysExpenses() throws Exception {
+        presenter.renderTodaysExpenses();
+        verify(view).showTodaysExpenses(expenses);
+    }
 
-  @Test
-  public void shouldRenderTodaysTotalExpenses() throws Exception {
-    presenter.renderTotalExpense();
-    verify(view).showTotalExpense(190l);
-  }
+    @Test
+    public void shouldRenderTodaysTotalExpenses() throws Exception {
+        presenter.renderTotalExpense();
+        verify(view).showTotalExpense(190.0);
+    }
 }

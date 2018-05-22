@@ -19,36 +19,36 @@ import static org.mockito.Mockito.when;
 
 public class CategoryPresenterTest {
 
-  private DatabaseHelper database;
-  private NewCategoryView view;
-  private CategoryPresenter presenter;
+    private DatabaseHelper database;
+    private NewCategoryView view;
+    private CategoryPresenter presenter;
 
-  @Before
-  public void setUp() throws Exception {
-    database = mock(DatabaseHelper.class);
-    view = mock(NewCategoryView.class);
-    presenter = new CategoryPresenter(view, database);
-  }
+    @Before
+    public void setUp() throws Exception {
+        database = mock(DatabaseHelper.class);
+        view = mock(NewCategoryView.class);
+        presenter = new CategoryPresenter(view, database);
+    }
 
-  @Test
-  public void shouldAddCategoryToTheDatabaseAndNotify() throws Exception {
-    when(view.getCategory()).thenReturn("Movie");
+    @Test
+    public void shouldAddCategoryToTheDatabaseAndNotify() throws Exception {
+        when(view.getCategory()).thenReturn("Movie");
 
-    ArgumentCaptor<ExpenseCategory> expenseTypeCaptor = ArgumentCaptor.forClass(ExpenseCategory.class);
+        ArgumentCaptor<ExpenseCategory> expenseTypeCaptor = ArgumentCaptor.forClass(ExpenseCategory.class);
 
-    assertTrue(presenter.addCategory());
-    verify(database).addExpenseType(expenseTypeCaptor.capture());
+        assertTrue(presenter.addCategory());
+        verify(database).addExpenseType(expenseTypeCaptor.capture());
 
-    ExpenseCategory expenseCategory = expenseTypeCaptor.getValue();
-    assertThat(expenseCategory.getCategory(), is("Movie"));
-  }
+        ExpenseCategory expenseCategory = expenseTypeCaptor.getValue();
+        assertThat(expenseCategory.getCategory(), is("Movie"));
+    }
 
-  @Test
-  public void shouldNotAddCategoryAndNotifyViewWhenCategoryInputIsEmpty() throws Exception {
-    when(view.getCategory()).thenReturn("");
+    @Test
+    public void shouldNotAddCategoryAndNotifyViewWhenCategoryInputIsEmpty() throws Exception {
+        when(view.getCategory()).thenReturn("");
 
-    assertFalse(presenter.addCategory());
-    verifyNoMoreInteractions(database);
-    verify(view).showError();
-  }
+        assertFalse(presenter.addCategory());
+        verifyNoMoreInteractions(database);
+        verify(view).showError();
+    }
 }

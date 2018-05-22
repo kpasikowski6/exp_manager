@@ -23,53 +23,53 @@ import static org.mockito.Mockito.when;
 
 public class CurrWeekExpensesPresenterTest {
 
-  private DatabaseHelper database;
-  private CurrWeekExpensesView view;
-  private CurrWeekExpensesPresenter presenter;
+    private DatabaseHelper database;
+    private CurrWeekExpensesView view;
+    private CurrWeekExpensesPresenter presenter;
 
-  @Before
-  public void setUp() throws Exception {
-    database = mock(DatabaseHelper.class);
-    view = mock(CurrWeekExpensesView.class);
+    @Before
+    public void setUp() throws Exception {
+        database = mock(DatabaseHelper.class);
+        view = mock(CurrWeekExpensesView.class);
 
-    DateTimeUtils.setCurrentMillisFixed(new DateTime("2015-09-06").getMillis());
-    Expense expense1 = new Expense(90l, "Food", "03-09-2015", currency, exchangeRate);
-    Expense expense2 = new Expense(100l, "Travel", "31-08-2015", currency, exchangeRate);
+        DateTimeUtils.setCurrentMillisFixed(new DateTime("2015-09-06").getMillis());
+        Expense expense1 = new Expense(90.0, "Food", "03-09-2015", "PLN", 1.0);
+        Expense expense2 = new Expense(100.0, "Travel", "31-08-2015", "PLN", 1.0);
 
-    when(database.getCurrentWeeksExpenses()).thenReturn(asList(expense1, expense2));
+        when(database.getCurrentWeeksExpenses()).thenReturn(asList(expense1, expense2));
 
-    presenter = new CurrWeekExpensesPresenter(database, view);
-  }
+        presenter = new CurrWeekExpensesPresenter(database, view);
+    }
 
-  @After
-  public void tearDown() throws Exception {
-    DateTimeUtils.setCurrentMillisSystem();
-  }
+    @After
+    public void tearDown() throws Exception {
+        DateTimeUtils.setCurrentMillisSystem();
+    }
 
-  @Test
-  public void shouldRenderExpensesOfCurrentWeek() throws Exception {
-    presenter.renderCurrentWeeksExpenses();
+    @Test
+    public void shouldRenderExpensesOfCurrentWeek() throws Exception {
+        presenter.renderCurrentWeeksExpenses();
 
-    ArgumentCaptor<Map> expenseCaptor = ArgumentCaptor.forClass(Map.class);
+        ArgumentCaptor<Map> expenseCaptor = ArgumentCaptor.forClass(Map.class);
 
-    verify(view).showCurrentWeeksExpenses(expenseCaptor.capture());
+        verify(view).showCurrentWeeksExpenses(expenseCaptor.capture());
 
-    Map<String, List<Expense>> expenseGroupByDate = expenseCaptor.getValue();
-    assertThat(expenseGroupByDate.keySet().size(), is(2));
+        Map<String, List<Expense>> expenseGroupByDate = expenseCaptor.getValue();
+        assertThat(expenseGroupByDate.keySet().size(), is(2));
 
-    assertThat(expenseGroupByDate.get("31-08-2015").size(), is(1));
-    assertThat(expenseGroupByDate.get("31-08-2015").get(0).getAmount(), is(100l));
-    assertThat(expenseGroupByDate.get("31-08-2015").get(0).getType(), is("Travel"));
+        assertThat(expenseGroupByDate.get("31-08-2015").size(), is(1));
+        assertThat(expenseGroupByDate.get("31-08-2015").get(0).getAmount(), is(100.0));
+        assertThat(expenseGroupByDate.get("31-08-2015").get(0).getType(), is("Travel"));
 
-    assertThat(expenseGroupByDate.get("03-09-2015").size(), is(1));
-    assertThat(expenseGroupByDate.get("03-09-2015").get(0).getAmount(), is(90l));
-    assertThat(expenseGroupByDate.get("03-09-2015").get(0).getType(), is("Food"));
-  }
+        assertThat(expenseGroupByDate.get("03-09-2015").size(), is(1));
+        assertThat(expenseGroupByDate.get("03-09-2015").get(0).getAmount(), is(90.0));
+        assertThat(expenseGroupByDate.get("03-09-2015").get(0).getType(), is("Food"));
+    }
 
-  @Test
-  public void shouldRenderTotalExpensesOfCurrentWeek() throws Exception {
-    presenter.renderTotalExpenses();
+    @Test
+    public void shouldRenderTotalExpensesOfCurrentWeek() throws Exception {
+        presenter.renderTotalExpenses();
 
-    verify(view).showTotalExpenses(190l);
-  }
+        verify(view).showTotalExpenses(190.0);
+    }
 }
