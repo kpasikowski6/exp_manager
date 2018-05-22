@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="expense_types">
+        <item>Jedzenie</item>
+        <item>Transport</item>
+        <item>Podróże</item>
+        <item>Zakupy</item>
+        <item>Mieszkanie</item>
+    </array>
+
+    <array name="currencies">
+        <item>PLN</item>
+        <item>GBP</item>
+        <item>CHE</item>
+        <item>CZK</item>
+        <item>HUF</item>
+        <item>EUR</item>
+        <item>NOK</item>
+        <item>USD</item>
+        <item>SEK</item>
+    </array>
+</resources>

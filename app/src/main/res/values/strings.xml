@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Menedżer wydatków</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="add_new_expense">Dodaj nowy wydatek</string>
+    <string name="amount">Wartość</string>
+    <string name="add_expense">Dodaj wydatek</string>
+    <string name="todays_expenses">Dzisiejsze wydatki</string>
+    <string name="current_week_expenses">Wydatki bieżącego tygodnia</string>
+    <string name="total_expense">Całkowity wydatek - </string>
+    <string name="rupee_sym">PLN</string>
+    <string name="expense_add_successfully">Wydatek dodany pomyślnie..</string>
+    <string name="amount_empty_error">Wartość nie może być pusta!!</string>
+    <string name="current_months_expenses">Statystyki bieżącego miesiąca</string>
+    <string name="add_new_category">Dodaj nową kategorię</string>
+    <string name="category">Kategoria</string>
+    <string name="add_category">Dodaj kategorię</string>
+    <string name="action_add_category">Dodaj kategorię</string>
+    <string name="category_empty_error">Pole Kategoria nie może być puste!!</string>
+    <string name="add_category_success">Kategoria dodana pomyślnie..</string>
+
+    <array name="drawer_items">
+        <item>Początek</item>
+        <item>Bieżący tydzień</item>
+        <item>Statystyki</item>
+    </array>
+</resources>
